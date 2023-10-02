@@ -1,0 +1,937 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.3.450">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Hans W Borchers">
+<meta name="dcterms.date" content="2023-09-30">
+
+<title>Selected Optimization Packages</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="selSolvers_files/libs/clipboard/clipboard.min.js"></script>
+<script src="selSolvers_files/libs/quarto-html/quarto.js"></script>
+<script src="selSolvers_files/libs/quarto-html/popper.min.js"></script>
+<script src="selSolvers_files/libs/quarto-html/tippy.umd.min.js"></script>
+<script src="selSolvers_files/libs/quarto-html/anchor.min.js"></script>
+<link href="selSolvers_files/libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="selSolvers_files/libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="selSolvers_files/libs/bootstrap/bootstrap.min.js"></script>
+<link href="selSolvers_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="selSolvers_files/libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+</head>
+
+<body>
+
+<div id="quarto-content" class="page-columns page-rows-contents page-layout-article">
+<div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+  <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#continuous-optimization" id="toc-continuous-optimization" class="nav-link active" data-scroll-target="#continuous-optimization">Continuous Optimization</a>
+  <ul>
+  <li><a href="#unconstrained-optimization" id="toc-unconstrained-optimization" class="nav-link" data-scroll-target="#unconstrained-optimization">Unconstrained optimization</a>
+  <ul class="collapse">
+  <li><a href="#ucminfucminf" id="toc-ucminfucminf" class="nav-link" data-scroll-target="#ucminfucminf">ucminf::<strong>ucminf</strong></a></li>
+  <li><a href="#lbfgslbfgs" id="toc-lbfgslbfgs" class="nav-link" data-scroll-target="#lbfgslbfgs">lbfgs::<strong>lbfgs</strong></a></li>
+  <li><a href="#nloptrlbfgs" id="toc-nloptrlbfgs" class="nav-link" data-scroll-target="#nloptrlbfgs">nloptr::<strong>lbfgs</strong></a></li>
+  <li><a href="#optimxoptimr" id="toc-optimxoptimr" class="nav-link" data-scroll-target="#optimxoptimr">optimx::<strong>optimr</strong></a></li>
+  </ul></li>
+  <li><a href="#constrained-optimization" id="toc-constrained-optimization" class="nav-link" data-scroll-target="#constrained-optimization">Constrained Optimization</a>
+  <ul class="collapse">
+  <li><a href="#alabamaauglag" id="toc-alabamaauglag" class="nav-link" data-scroll-target="#alabamaauglag">alabama::<strong>auglag</strong></a></li>
+  <li><a href="#nlcoptimsolnl" id="toc-nlcoptimsolnl" class="nav-link" data-scroll-target="#nlcoptimsolnl">NLcOptim::<strong>solnl</strong></a></li>
+  <li><a href="#bbspg" id="toc-bbspg" class="nav-link" data-scroll-target="#bbspg">BB::<strong>spg</strong></a></li>
+  <li><a href="#nloptrslsqp" id="toc-nloptrslsqp" class="nav-link" data-scroll-target="#nloptrslsqp">nloptr::<strong>slsqp</strong></a></li>
+  </ul></li>
+  <li><a href="#quadratic-optimization" id="toc-quadratic-optimization" class="nav-link" data-scroll-target="#quadratic-optimization">Quadratic Optimization</a>
+  <ul class="collapse">
+  <li><a href="#osqpsolve_osqp" id="toc-osqpsolve_osqp" class="nav-link" data-scroll-target="#osqpsolve_osqp">osqp::<strong>solve_osqp</strong></a></li>
+  <li><a href="#piqpsolve_piqp" id="toc-piqpsolve_piqp" class="nav-link" data-scroll-target="#piqpsolve_piqp">piqp::<strong>solve_piqp</strong></a></li>
+  </ul></li>
+  <li><a href="#least-squares-problems" id="toc-least-squares-problems" class="nav-link" data-scroll-target="#least-squares-problems">Least-squares Problems</a>
+  <ul class="collapse">
+  <li><a href="#nlsrnlsr" id="toc-nlsrnlsr" class="nav-link" data-scroll-target="#nlsrnlsr">nlsr::<strong>nlsr</strong></a></li>
+  <li><a href="#minpack.lmnls.lm" id="toc-minpack.lmnls.lm" class="nav-link" data-scroll-target="#minpack.lmnls.lm">minpack.lm::<strong>nls.lm</strong></a></li>
+  </ul></li>
+  <li><a href="#convex-optimization" id="toc-convex-optimization" class="nav-link" data-scroll-target="#convex-optimization">Convex Optimization</a>
+  <ul class="collapse">
+  <li><a href="#cvxrsolve" id="toc-cvxrsolve" class="nav-link" data-scroll-target="#cvxrsolve">CVXR:<strong>solve</strong></a></li>
+  </ul></li>
+  <li><a href="#derivative-free-optimization" id="toc-derivative-free-optimization" class="nav-link" data-scroll-target="#derivative-free-optimization">Derivative-free Optimization</a>
+  <ul class="collapse">
+  <li><a href="#dfoptimnmk" id="toc-dfoptimnmk" class="nav-link" data-scroll-target="#dfoptimnmk">dfoptim::<strong>nmk</strong></a></li>
+  <li><a href="#nloptrneldermead" id="toc-nloptrneldermead" class="nav-link" data-scroll-target="#nloptrneldermead">nloptr::<strong>neldermead</strong></a></li>
+  <li><a href="#pracmaanms" id="toc-pracmaanms" class="nav-link" data-scroll-target="#pracmaanms">pracma::<strong>anms</strong></a></li>
+  </ul></li>
+  </ul></li>
+  <li><a href="#global-and-stochastic-optimization" id="toc-global-and-stochastic-optimization" class="nav-link" data-scroll-target="#global-and-stochastic-optimization">Global and Stochastic Optimization</a>
+  <ul>
+  <li><a href="#differential-evolution" id="toc-differential-evolution" class="nav-link" data-scroll-target="#differential-evolution">Differential Evolution</a>
+  <ul class="collapse">
+  <li><a href="#deoptimdeoptim" id="toc-deoptimdeoptim" class="nav-link" data-scroll-target="#deoptimdeoptim">DEoptim::<strong>DEoptim</strong></a></li>
+  <li><a href="#deoptimrjdeoptim" id="toc-deoptimrjdeoptim" class="nav-link" data-scroll-target="#deoptimrjdeoptim">DEoptimR::<strong>JDEoptim</strong></a></li>
+  </ul></li>
+  <li><a href="#simulated-annealing" id="toc-simulated-annealing" class="nav-link" data-scroll-target="#simulated-annealing">Simulated Annealing</a>
+  <ul class="collapse">
+  <li><a href="#gensagensa" id="toc-gensagensa" class="nav-link" data-scroll-target="#gensagensa">GenSA::<strong>GenSA</strong></a></li>
+  </ul></li>
+  <li><a href="#genetic-algorithms" id="toc-genetic-algorithms" class="nav-link" data-scroll-target="#genetic-algorithms">Genetic Algorithms</a></li>
+  <li><a href="#particle-swarm-optimization" id="toc-particle-swarm-optimization" class="nav-link" data-scroll-target="#particle-swarm-optimization">Particle-swarm Optimization</a>
+  <ul class="collapse">
+  <li><a href="#psopsoptim" id="toc-psopsoptim" class="nav-link" data-scroll-target="#psopsoptim">pso::<strong>psoptim</strong></a></li>
+  </ul></li>
+  <li><a href="#cma-es" id="toc-cma-es" class="nav-link" data-scroll-target="#cma-es">CMA-ES</a>
+  <ul class="collapse">
+  <li><a href="#rcmacmaoptimdp" id="toc-rcmacmaoptimdp" class="nav-link" data-scroll-target="#rcmacmaoptimdp">rCMA::<strong>cmaOptimDP</strong></a></li>
+  <li><a href="#adagiopurecmaes" id="toc-adagiopurecmaes" class="nav-link" data-scroll-target="#adagiopurecmaes">adagio::<strong>pureCMAES</strong></a></li>
+  </ul></li>
+  </ul></li>
+  <li><a href="#linear-and-mixed-integer-programming" id="toc-linear-and-mixed-integer-programming" class="nav-link" data-scroll-target="#linear-and-mixed-integer-programming">Linear and Mixed-integer Programming</a>
+  <ul>
+  <li><a href="#linear-programming" id="toc-linear-programming" class="nav-link" data-scroll-target="#linear-programming">Linear Programming</a>
+  <ul class="collapse">
+  <li><a href="#highshighs_solve" id="toc-highshighs_solve" class="nav-link" data-scroll-target="#highshighs_solve">highs::<strong>highs_solve</strong></a></li>
+  <li><a href="#rcbccbc_solve" id="toc-rcbccbc_solve" class="nav-link" data-scroll-target="#rcbccbc_solve">rcbc::<strong>cbc_solve</strong></a></li>
+  </ul></li>
+  </ul></li>
+  <li><a href="#multivariate-root-finding" id="toc-multivariate-root-finding" class="nav-link" data-scroll-target="#multivariate-root-finding">Multivariate Root Finding</a>
+  <ul>
+  <li><a href="#nleqslvnleqslv" id="toc-nleqslvnleqslv" class="nav-link" data-scroll-target="#nleqslvnleqslv">nleqslv::<strong>nleqslv</strong></a></li>
+  <li><a href="#bbsane" id="toc-bbsane" class="nav-link" data-scroll-target="#bbsane">BB::<strong>sane</strong></a></li>
+  </ul></li>
+  <li><a href="#appendix-i-r-solvers" id="toc-appendix-i-r-solvers" class="nav-link" data-scroll-target="#appendix-i-r-solvers">Appendix I: R Solvers</a>
+  <ul>
+  <li><a href="#base-r-solvers" id="toc-base-r-solvers" class="nav-link" data-scroll-target="#base-r-solvers">Base R Solvers</a>
+  <ul class="collapse">
+  <li><a href="#optimize" id="toc-optimize" class="nav-link" data-scroll-target="#optimize"><strong>optimize</strong></a></li>
+  <li><a href="#optim" id="toc-optim" class="nav-link" data-scroll-target="#optim"><strong>optim</strong></a></li>
+  <li><a href="#nlminb" id="toc-nlminb" class="nav-link" data-scroll-target="#nlminb"><strong>nlminb</strong></a></li>
+  <li><a href="#constroptim" id="toc-constroptim" class="nav-link" data-scroll-target="#constroptim"><strong>constrOptim</strong></a></li>
+  <li><a href="#nls" id="toc-nls" class="nav-link" data-scroll-target="#nls"><strong>nls</strong></a></li>
+  </ul></li>
+  </ul></li>
+  <li><a href="#appendix-ii-external-solvers" id="toc-appendix-ii-external-solvers" class="nav-link" data-scroll-target="#appendix-ii-external-solvers">Appendix II: External Solvers</a>
+  <ul>
+  <li><a href="#ipopt-through-juliacall" id="toc-ipopt-through-juliacall" class="nav-link" data-scroll-target="#ipopt-through-juliacall">Ipopt through JuliaCall</a></li>
+  <li><a href="#the-roi-infrastructure" id="toc-the-roi-infrastructure" class="nav-link" data-scroll-target="#the-roi-infrastructure">The ROI Infrastructure</a></li>
+  <li><a href="#utilizing-the-neos-server" id="toc-utilizing-the-neos-server" class="nav-link" data-scroll-target="#utilizing-the-neos-server">Utilizing the NEOS Server</a></li>
+  </ul></li>
+  <li><a href="#references" id="toc-references" class="nav-link" data-scroll-target="#references">References</a></li>
+  </ul>
+</nav>
+</div>
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Selected Optimization Packages</h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    <div>
+    <div class="quarto-title-meta-heading">Author</div>
+    <div class="quarto-title-meta-contents">
+             <p>Hans W Borchers </p>
+          </div>
+  </div>
+    
+    <div>
+    <div class="quarto-title-meta-heading">Published</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date">September 30, 2023</p>
+    </div>
+  </div>
+  
+    
+  </div>
+  
+
+</header>
+
+<section id="continuous-optimization" class="level2">
+<h2 class="anchored" data-anchor-id="continuous-optimization">Continuous Optimization</h2>
+<p><em>All optimization solvers in Base R have been moved to Appendix I. This page will focus on more modern and state-of-the-art solvers available in packages on CRAN or Github.</em></p>
+<hr>
+<section id="unconstrained-optimization" class="level3">
+<h3 class="anchored" data-anchor-id="unconstrained-optimization">Unconstrained optimization</h3>
+<blockquote class="blockquote">
+<p>In <em>numerical optimization</em> the goal is to minimize (or maximize) an objective function that depends on real variables: <span class="math inline">\(\min_x f(x)\)</span>. <em>Unconstrained</em> means there are no restrictions on these variables, except possibly box (aka bounds) constraints <span class="math inline">\(l_i \le x_i \le u_i\)</span> for all <span class="math inline">\(i\)</span>.</p>
+</blockquote>
+<section id="ucminfucminf" class="level4">
+<h4 class="anchored" data-anchor-id="ucminfucminf">ucminf::<strong>ucminf</strong></h4>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ucminf</span>(par, fn, <span class="at">gr =</span> <span class="cn">NULL</span>, ..., <span class="at">control =</span> <span class="fu">list</span>(), <span class="at">hessian =</span> <span class="dv">0</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p><a href="https://cran.r-universe.dev/ucminf/doc/manual.html#ucminf">help page</a></p>
+<p>An algorithm for general-purpose unconstrained non-linear optimization. The algorithm is of quasi-Newton type with BFGS updating and soft line searching. It is effective and accurate.</p>
+<p>Note: The interface of <code>ucminf</code> is designed for easy interchange with ‘optim’.</p>
+<hr>
+</section>
+<section id="lbfgslbfgs" class="level4">
+<h4 class="anchored" data-anchor-id="lbfgslbfgs">lbfgs::<strong>lbfgs</strong></h4>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">lbfgs</span>(call_eval, call_grad, vars, ...,</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>      <span class="at">max_iterations =</span> <span class="dv">0</span>, <span class="at">ftol =</span> <span class="fl">1e-4</span>,</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>      <span class="at">orthantwise_c =</span> <span class="dv">0</span>                 <span class="co"># &gt; 0 to start the OWL-QN algorithm</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p><a href="https://cran.r-universe.dev/lbfgs/doc/manual.html#lbfgs">help page</a> and <a href="http://www.chokkan.org/software/liblbfgs/index.html">libLBFGS</a> page.</p>
+<p><code>lbfgs</code> performs function optimization using the L-BFGS and <em>Orthant-Wise Limited-memory Quasi-Newton</em> optimization (OWL-QN) algorithms. It’s a wrapper to the <em>libLBFGS</em> library by Naoaki Okazaki, based on an implementation of the L-BFGS method written by Jorge Nocedal.</p>
+<p><em>Note</em>: There are many more options to set if needed, see the help page. It has no box constraints. The OWL-QN algorithm is particularly suited for higher-dimensional problems (but can be extremely slow).</p>
+<hr>
+</section>
+<section id="nloptrlbfgs" class="level4">
+<h4 class="anchored" data-anchor-id="nloptrlbfgs">nloptr::<strong>lbfgs</strong></h4>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">lbfgs</span>(x0, fn, <span class="at">gr =</span> <span class="cn">NULL</span>, <span class="at">lower =</span> <span class="cn">NULL</span>, <span class="at">upper =</span> <span class="cn">NULL</span>,</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>      <span class="at">nl.info =</span> <span class="cn">FALSE</span>, <span class="at">control =</span> <span class="fu">list</span>(), ...)</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="fu">varmetric</span>(x0, fn, <span class="at">gr =</span> <span class="cn">NULL</span>, <span class="at">rank2 =</span> <span class="cn">TRUE</span>,  <span class="co"># rank-2|-1 update method</span></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>          <span class="at">lower =</span> <span class="cn">NULL</span>, <span class="at">upper =</span> <span class="cn">NULL</span>,</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>          <span class="at">nl.info =</span> <span class="cn">FALSE</span>, <span class="at">control =</span> <span class="fu">list</span>(), ...)</span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a><span class="fu">tnewton</span>(x0, fn, <span class="at">gr =</span> <span class="cn">NULL</span>, <span class="at">lower =</span> <span class="cn">NULL</span>, <span class="at">upper =</span> <span class="cn">NULL</span>,</span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>        <span class="at">precond =</span> <span class="cn">TRUE</span>, <span class="at">restart =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>        <span class="at">nl.info =</span> <span class="cn">FALSE</span>, <span class="at">control =</span> <span class="fu">list</span>(), ...)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>lbfgs <a href="https://cran.r-universe.dev/nloptr/doc/manual.html#lbfgs">help page</a> | varmetric <a href="https://cran.r-universe.dev/nloptr/doc/manual.html#varmetric">help page</a> | tnewton <a href="https://cran.r-universe.dev/nloptr/doc/manual.html#tnewton">help page</a></p>
+<p>Package ‘nloptr’ supports the following quasi-Newton methods:</p>
+<ul>
+<li><code>lbfgs</code>: Low-storage version of the Broyden-Fletcher-Goldfarb-Shanno (BFGS) method.</li>
+<li><code>varmetric</code>: Shifted limited-memory variable-metric algorithm.</li>
+<li><code>tnewton</code>: Truncated Newton method, using a conjugate-gradient approach.</li>
+</ul>
+<p>Relevant options are <code>xto_rel = 1e-6</code>, <code>maxeval = 1000</code>, but also <code>stopval = -Inf</code> or <code>check_derivatives = FALSE</code>, see <code>nloptr.print.options()</code> for all options!</p>
+<p><em>Note</em>: Package ‘nloptr’ is a wraper for <a href="https://nlopt.readthedocs.io/en/latest/">NLopt</a>, an open-source library for nonlinear optimization.</p>
+<hr>
+</section>
+<section id="optimxoptimr" class="level4">
+<h4 class="anchored" data-anchor-id="optimxoptimr">optimx::<strong>optimr</strong></h4>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">optimr</span>(par, fn, <span class="at">gr=</span><span class="cn">NULL</span>, <span class="at">hess=</span><span class="cn">NULL</span>, <span class="at">method=</span><span class="cn">NULL</span>, <span class="at">lower=</span><span class="sc">-</span><span class="cn">Inf</span>, <span class="at">upper=</span><span class="cn">Inf</span>, </span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>          <span class="at">hessian=</span><span class="cn">FALSE</span>, <span class="at">control=</span><span class="fu">list</span>(), ...</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p><a href="https://cran.r-universe.dev/optimx/doc/manual.html#optimr">help page</a></p>
+<p>General-purpose optimization wrapper function that calls other R tools for optimization, including the existing <code>optim</code> function. Careful reimplementations in pure R of methods originally available in <code>optim</code>.</p>
+<p>The <code>optimr</code> function supports the following methods:</p>
+<ul>
+<li><code>optimr(method = "nvm")</code> – variable metric method</li>
+<li><code>optimr(method = "ncg")</code> – conjugate gradient method</li>
+</ul>
+<p><em>Note</em>: This package is under development.</p>
+<hr>
+<hr>
+</section>
+</section>
+<section id="constrained-optimization" class="level3">
+<h3 class="anchored" data-anchor-id="constrained-optimization">Constrained Optimization</h3>
+<blockquote class="blockquote">
+<p>There are many different types of constraints. Here we list solvers that are capable of handling general non-linear constraints, equality and inequality constraints. The preferred method for doing this is the ‘augmented Lagrangian’ approach. – <a href="https://en.wikipedia.org/wiki/Augmented_Lagrangian_method">wp:Augmented_Lagrangian_method</a></p>
+</blockquote>
+<section id="alabamaauglag" class="level4">
+<h4 class="anchored" data-anchor-id="alabamaauglag">alabama::<strong>auglag</strong></h4>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">auglag</span>(par, fn, gr, hin, hin.jac, heq, heq.jac, </span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>       <span class="at">control.outer=</span><span class="fu">list</span>(), <span class="at">control.optim =</span> <span class="fu">list</span>(), ...</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p><a href="https://cran.r-universe.dev/alabama/doc/manual.html#auglag">help page</a></p>
+<p><code>auglag</code>implements the Augmented Lagrangian Minimization Algorithm for optimizing smooth nonlinear objective functions with constraints. Linear or nonlinear equality and inequality constraints are allowed.</p>
+<p><em>Note</em>: There is also function <code>constrOptim.nl</code>, applying an Augmented Lagrangian Adaptive Barrier Minimization Algorithm; can be used to replace <code>constrOptim</code> in Base R.</p>
+<hr>
+</section>
+<section id="nlcoptimsolnl" class="level4">
+<h4 class="anchored" data-anchor-id="nlcoptimsolnl">NLcOptim::<strong>solnl</strong></h4>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">solnl</span>(<span class="at">X =</span> <span class="cn">NULL</span>, <span class="at">objfun =</span> <span class="cn">NULL</span>, <span class="at">confun =</span> <span class="cn">NULL</span>, <span class="at">A =</span> <span class="cn">NULL</span>, <span class="at">B =</span> <span class="cn">NULL</span>,</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>      <span class="at">Aeq =</span> <span class="cn">NULL</span>, <span class="at">Beq =</span> <span class="cn">NULL</span>, <span class="at">lb =</span> <span class="cn">NULL</span>, <span class="at">ub =</span> <span class="cn">NULL</span>, <span class="at">tolX =</span> <span class="fl">1e-05</span>,</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>      <span class="at">tolFun =</span> <span class="fl">1e-06</span>, <span class="at">tolCon =</span> <span class="fl">1e-06</span>, <span class="at">maxnFun =</span> <span class="fl">1e+07</span>, <span class="at">maxIter =</span> <span class="dv">4000</span></span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p><a href="https://cran.r-universe.dev/NlcOptim/doc/manual.html#solnl">help page</a></p>
+<p><code>solnl</code> implements the Sequential Quadratic Programming (SQP) method to find solution for general nonlinear optimization problem (with nonlinear objective and constraint functions). Linear or nonlinear equality and inequality constraints are allowed.</p>
+<p><em>Note</em>: The SQP method is described in detail in the book “Numeric Optimization” by Nocedal and Wright. <a href="https://en.wikipedia.org/wiki/Sequential_quadratic_programming">wp:SQP</a></p>
+<hr>
+</section>
+<section id="bbspg" class="level4">
+<h4 class="anchored" data-anchor-id="bbspg">BB::<strong>spg</strong></h4>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">spg</span>(par, fn, <span class="at">gr=</span><span class="cn">NULL</span>, <span class="at">method=</span><span class="dv">3</span>, <span class="at">lower=</span><span class="sc">-</span><span class="cn">Inf</span>, <span class="at">upper=</span><span class="cn">Inf</span>, </span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>    <span class="at">project=</span><span class="cn">NULL</span>, <span class="at">projectArgs=</span><span class="cn">NULL</span>, </span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">control=</span><span class="fu">list</span>(), <span class="at">quiet=</span><span class="cn">FALSE</span>, <span class="at">alertConvergence=</span><span class="cn">TRUE</span>, ...</span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p><a href="https://cran.r-universe.dev/BB/doc/manual.html#spg">help page</a></p>
+<p><code>spg</code> applies Barzlai-Borwein spectral methods for large-scale nonlinear optimization subject to simple constraints. Based on code from the <a href="https://www.ime.usp.br/~egbirgin/tango/">TANGO</a> project. <a href="https://en.wikipedia.org/wiki/Barzilai-Borwein_method">wp:BB</a></p>
+<p><em>Note</em>: Use the projection function <code>projectLinear</code> for equality and inequality constraints <code>A x - b &gt;= 0</code>.</p>
+<hr>
+</section>
+<section id="nloptrslsqp" class="level4">
+<h4 class="anchored" data-anchor-id="nloptrslsqp">nloptr::<strong>slsqp</strong></h4>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">slsqp</span>(x0, fn, <span class="at">gr =</span> <span class="cn">NULL</span>, <span class="at">lower =</span> <span class="cn">NULL</span>, <span class="at">upper =</span> <span class="cn">NULL</span>,</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>      <span class="at">hin =</span> <span class="cn">NULL</span>, <span class="at">hinjac =</span> <span class="cn">NULL</span>, <span class="at">heq =</span> <span class="cn">NULL</span>, <span class="at">heqjac =</span> <span class="cn">NULL</span>,</span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>      <span class="at">nl.info =</span> <span class="cn">FALSE</span>, <span class="at">control =</span> <span class="fu">list</span>(), ...</span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a><span class="fu">cobyla</span>(x0, fn, <span class="at">lower =</span> <span class="cn">NULL</span>, <span class="at">upper =</span> <span class="cn">NULL</span>, <span class="at">hin =</span> <span class="cn">NULL</span>,</span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>       <span class="at">nl.info =</span> <span class="cn">FALSE</span>, <span class="at">control =</span> <span class="fu">list</span>(), ...</span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p><code>slsqp</code> <a href="https://cran.r-universe.dev/nloptr/doc/manual.html#slsqp">help page</a>, <code>cobyla</code> <a href="https://cran.r-universe.dev/nloptr/doc/manual.html#cobyla">help page</a>, and <a href="https://nlopt.readthedocs.io/en/latest/">NLopt</a> Documentation</p>
+<p><code>slsqp</code> implements a Sequential (least-squares) quadratic programming (SQP) algorithm for nonlinearly constrained, gradient-based optimization, supporting both equality and inequality constraints.</p>
+<p><code>cobyla</code> implements an algorithm for derivative-free optimization with nonlinear inequality constraints (no equality constraints). It constructs successive linear approximations and constraints via simplices.</p>
+<hr>
+<hr>
+</section>
+</section>
+<section id="quadratic-optimization" class="level3">
+<h3 class="anchored" data-anchor-id="quadratic-optimization">Quadratic Optimization</h3>
+<blockquote class="blockquote">
+<p>Quadratic optimization (or: Quadratic Programming, QP) problems are optimization problems of the form <span class="math inline">\(\min_x 0.5\, x'Px + q' x\)</span> with linear or quadratic constraints. These problems are ubiquiteous and appear in almost all data fitting and least-squares approximation tasks. – <a href="https://en.wikipedia.org/wiki/Quadratic_programming">wp:Quadratic programming</a></p>
+</blockquote>
+<section id="osqpsolve_osqp" class="level4">
+<h4 class="anchored" data-anchor-id="osqpsolve_osqp">osqp::<strong>solve_osqp</strong></h4>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">solve_osqp</span>(<span class="at">P =</span> <span class="cn">NULL</span>, <span class="at">q =</span> <span class="cn">NULL</span>,</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>           <span class="at">A =</span> <span class="cn">NULL</span>, <span class="at">l =</span> <span class="cn">NULL</span>, <span class="at">u =</span> <span class="cn">NULL</span>,</span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>           <span class="at">pars =</span> <span class="fu">osqpSettings</span>()</span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p><a href="https://cran.r-universe.dev/osqp/doc/manual.html#solve_osqp">help page</a> and <a href="https://osqp.org/">OSQP</a> home page.</p>
+<p><code>solve_osqp</code> solves Quadratic Programming (QP) problems with linear inequality constraints, using the OSQP library of the University of Oxford. <code>P</code> and <code>q</code> as above, linear inequalities as <code>l &lt;= Ax &lt;= u</code>, <code>A</code> a (sparse) matrix.</p>
+<hr>
+</section>
+<section id="piqpsolve_piqp" class="level4">
+<h4 class="anchored" data-anchor-id="piqpsolve_piqp">piqp::<strong>solve_piqp</strong></h4>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">solve_piqp</span>(<span class="at">P =</span> <span class="cn">NULL</span>, <span class="at">c =</span> <span class="cn">NULL</span>,</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>           <span class="at">A =</span> <span class="cn">NULL</span>, <span class="at">b =</span> <span class="cn">NULL</span>, <span class="at">G =</span> <span class="cn">NULL</span>, <span class="at">h =</span> <span class="cn">NULL</span>,</span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>           <span class="at">x_lb =</span> <span class="cn">NULL</span>, <span class="at">x_ub =</span> <span class="cn">NULL</span>,</span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>           <span class="at">settings =</span> <span class="fu">list</span>(), <span class="at">backend =</span> <span class="fu">c</span>(<span class="st">"auto"</span>, <span class="st">"sparse"</span>, <span class="st">"dense"</span>)</span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p><a href="https://cran.r-universe.dev/piqp/doc/manual.html#solve_piqp">help page</a> and <a href="https://predict-epfl.github.io/piqp/">PIQP</a> home page.</p>
+<p><code>solve_piqp</code> solves Quadratic Programming (QP) problems with linear equality <em>and</em> inequality constraints, using the very fast “Proximal Interior Point Quadratic Programming” solver of the EPFL. <code>c</code> is <code>q</code> above, equality constraints <code>A x = b</code>, inequality constraints <code>G x &lt;= h</code> and box constraints <code>x_lb &lt;= x &lt;= x_ub</code>.</p>
+<hr>
+<hr>
+</section>
+</section>
+<section id="least-squares-problems" class="level3">
+<h3 class="anchored" data-anchor-id="least-squares-problems">Least-squares Problems</h3>
+<blockquote class="blockquote">
+<p>Least-squares is a standard approach in regression analysis to approximate the solution of linear or nonlinear systems. Nonlinear least-squares problems are usually solved by iterative procedures, quite similar to optimization problems. – <a href="https://en.wikipedia.org/wiki/Least_squares">wp:Least squares</a></p>
+</blockquote>
+<section id="nlsrnlsr" class="level4">
+<h4 class="anchored" data-anchor-id="nlsrnlsr">nlsr::<strong>nlsr</strong></h4>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">nlsr</span>(<span class="at">formula =</span> <span class="cn">NULL</span>, <span class="at">data =</span> <span class="cn">NULL</span>, <span class="at">start =</span> <span class="cn">NULL</span>,</span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>     <span class="at">control =</span> <span class="cn">NULL</span>, <span class="at">trace =</span> <span class="cn">FALSE</span>, <span class="at">subset =</span> <span class="cn">NULL</span>,</span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>     <span class="at">lower =</span> <span class="sc">-</span><span class="cn">Inf</span>, <span class="at">upper =</span> <span class="cn">Inf</span>,  <span class="at">weights =</span> <span class="cn">NULL</span>, ...</span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p><a href="https://cran.r-universe.dev/nlsr/doc/manual.html#nlsr">help page</a></p>
+<p><code>nlsr</code> provides solutions to a nonlinear least squares problem using the Nash Marquardt tools, i.e., internally applies the Levenberg-Marquardt algorithm. Conceived as a replacement for <code>nls</code>.</p>
+<hr>
+</section>
+<section id="minpack.lmnls.lm" class="level4">
+<h4 class="anchored" data-anchor-id="minpack.lmnls.lm">minpack.lm::<strong>nls.lm</strong></h4>
+<div class="sourceCode" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">nls.lm</span>(par, <span class="at">lower=</span><span class="cn">NULL</span>, <span class="at">upper=</span><span class="cn">NULL</span>, fn, <span class="at">jac =</span> <span class="cn">NULL</span>,</span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>       <span class="at">control =</span> <span class="fu">nls.lm.control</span>(), ...</span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p><a href="https://cran.r-universe.dev/minpack.lm/doc/manual.html#nls.lm">help page</a></p>
+<p><code>nls.lm</code> minimizes the sum-of-squares of the vector returned by the function fn, by a modification of the Levenberg-Marquardt algorithm. The user may also provide a function <code>jac</code> which calculates the Jacobian.</p>
+<hr>
+<hr>
+</section>
+</section>
+<section id="convex-optimization" class="level3">
+<h3 class="anchored" data-anchor-id="convex-optimization">Convex Optimization</h3>
+<blockquote class="blockquote">
+<p>A convex optimization problem is one where the objective function and all constraints are convex. There are very effective interior-point methods to solve convex problems quickly and with high accuracy. Convex problems have only one local optimum, i.e., a local solution is also a global solution. – <a href="https://en.wikipedia.org/wiki/Convex_optimization">wp:Convex optimization</a></p>
+</blockquote>
+<section id="cvxrsolve" class="level4">
+<h4 class="anchored" data-anchor-id="cvxrsolve">CVXR:<strong>solve</strong></h4>
+<div class="sourceCode" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>n <span class="ot">&lt;-</span> <span class="fu">length</span>(data)</span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">Variable</span>(n)                            <span class="co"># initialize n variables</span></span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>objective <span class="ot">&lt;-</span> <span class="fu">Minimize</span>(<span class="fu">p_norm</span>(data <span class="sc">-</span> x, <span class="dv">2</span>))  <span class="co"># define the objective function</span></span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>constraint <span class="ot">&lt;-</span> <span class="fu">list</span>(<span class="fu">diff</span>(x) <span class="sc">&gt;=</span> <span class="dv">0</span>)            <span class="co"># and the list of constraints</span></span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>problem <span class="ot">&lt;-</span> <span class="fu">Problem</span>(objective, constraint)   <span class="co"># check the problem for convexity</span></span>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a>result <span class="ot">&lt;-</span> <span class="fu">solve</span>(problem)                    <span class="co"># and send it to a convex solver</span></span>
+<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a>result<span class="sc">$</span><span class="fu">getValue</span>(x)                          <span class="co"># retrieve the results</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p><a href="https://cran.r-universe.dev/CVXR/doc/manual.html#solve">help page</a> and <a href="https://cvxr.rbind.io/">CVXR</a> home page.</p>
+<p>‘CVXR’ is an R package that implements the disciplined convex programming (DCP) approach by Steven Boyd and colleagues to verify the problem’s convexity. It provides an object-oriented modeling language that allows the user to formulate convex optimization problems in a natural mathematical syntax. When the model has been verified, it will be sent to a convex solver such as ECOS or SCS.</p>
+<p><em>Note</em>: The code above is an example of how the modeling language looks like. It solves an isotonic least-squares regression <span class="math inline">\(x_1 \le x_2 \le \ldots \le x_n\)</span>. There is no single <code>solve</code> function whose usage could be described. See the <a href="https://cvxr.rbind.io/examples/">Tutorial Examples</a> in the documentation.</p>
+<p><em>Remark</em>: There are more convex solvers in R packages (cf.&nbsp;‘clarabel’, ‘sdpt3r’, ‘cccp’, etc.), their usage can indeed be a quite complex task even for an experienced user.</p>
+<hr>
+<hr>
+</section>
+</section>
+<section id="derivative-free-optimization" class="level3">
+<h3 class="anchored" data-anchor-id="derivative-free-optimization">Derivative-free Optimization</h3>
+<blockquote class="blockquote">
+<p>‘Derivative-free’ means numerical optimization without the use of gradients (or hessians). The most popular candidate is Nelder-Mead, a simplex-based direct search method. – <a href="https://en.wikipedia.org/wiki/Nelder-Mead_method">wp:Nelder-Mead</a> and <a href="https://en.wikipedia.org/wiki/Derivative-free_optimization">wp:Derivative-free optimization</a><br>
+<em>Note</em>: Saying an algorithm is derivative-free does <em>not</em> mean it will minimize nonsmooth objective functions effectively!</p>
+</blockquote>
+<section id="dfoptimnmk" class="level4">
+<h4 class="anchored" data-anchor-id="dfoptimnmk">dfoptim::<strong>nmk</strong></h4>
+<div class="sourceCode" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="fu">nmk</span>(par, fn, <span class="at">control =</span> <span class="fu">list</span>(), ...)</span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a><span class="fu">nmkb</span>(par, fn, <span class="at">lower=</span><span class="sc">-</span><span class="cn">Inf</span>, <span class="at">upper=</span><span class="cn">Inf</span>, <span class="at">control =</span> <span class="fu">list</span>(), ...)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p><a href="https://cran.r-universe.dev/dfoptim/doc/manual.html#nmk">help page</a></p>
+<p><code>nmk</code> is an implementation of Nelder-Mead based on MATLAB code by C.T. Kelley for his book “Iterative Methods for Optimization”. The function <code>nmkb</code> allows box constraints for Nelder-Mead.</p>
+<hr>
+</section>
+<section id="nloptrneldermead" class="level4">
+<h4 class="anchored" data-anchor-id="nloptrneldermead">nloptr::<strong>neldermead</strong></h4>
+<div class="sourceCode" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="fu">neldermead</span>(x0, fn, <span class="at">lower =</span> <span class="cn">NULL</span>, <span class="at">upper =</span> <span class="cn">NULL</span>,</span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>           <span class="at">nl.info =</span> <span class="cn">FALSE</span>, <span class="at">control =</span> <span class="fu">list</span>(), ...</span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p><a href="https://cran.r-universe.dev/nloptr/doc/manual.html#neldermead">help page</a></p>
+<p>An implementation of almost the original Nelder-mead simplex algorithm, but provides explicit support for box constraints. The function is quite fast and accurate.</p>
+<hr>
+</section>
+<section id="pracmaanms" class="level4">
+<h4 class="anchored" data-anchor-id="pracmaanms">pracma::<strong>anms</strong></h4>
+<div class="sourceCode" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="fu">anms</span>(fn, x0, ..., <span class="at">tol =</span> <span class="fl">1e-10</span>, <span class="at">maxfeval =</span> <span class="cn">NULL</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p><a href="https://cran.r-universe.dev/pracma/doc/manual.html#anms">help page</a></p>
+<p><code>anms</code> is an implementation of Nelder-Mead with adaptive parameters, based on ideas of Gao &amp; Han 2012. It is particularly suitable for higher-dimensional problems (20-30 variables).</p>
+<hr>
+<hr>
+</section>
+</section>
+</section>
+<section id="global-and-stochastic-optimization" class="level2">
+<h2 class="anchored" data-anchor-id="global-and-stochastic-optimization">Global and Stochastic Optimization</h2>
+<section id="differential-evolution" class="level3">
+<h3 class="anchored" data-anchor-id="differential-evolution">Differential Evolution</h3>
+<blockquote class="blockquote">
+<p>Differential Evolution (DE) optimizes a problem by maintaining a population of candidate solutions and creating new candidate solutions by combining existing ones according to its simple formulae, and then keeping whichever candidate solution has the best score or fitness. – <a href="https://en.wikipedia.org/wiki/Differential_evolution">wp:DE</a> and <a href="https://en.wikipedia.org/wiki/Global_optimization">wp:Global optimization</a></p>
+</blockquote>
+<section id="deoptimdeoptim" class="level4">
+<h4 class="anchored" data-anchor-id="deoptimdeoptim">DEoptim::<strong>DEoptim</strong></h4>
+<div class="sourceCode" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="fu">DEoptim</span>(fn, lower, upper,</span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>        <span class="at">control =</span> <span class="fu">DEoptim.control</span>(), ..., <span class="at">fnMap=</span><span class="cn">NULL</span></span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p><a href="https://cran.r-universe.dev/DEoptim/doc/manual.html#DEoptim">help page</a></p>
+<p><code>DEoptim</code> implements the Differential Evolution (DE) algorithm similar to what is described in the book “Differential Evolution – A Practical Approach to Global Optimization” by Price et al.&nbsp;The package relies on an interface to a C implementation of DE, which is effective and fast.</p>
+<p>The control options <code>NP</code> (for population size) and <code>maxiter</code> should probably be set 5-10 times higher than the default. The recommended strategies are <code>2</code> (default) or <code>3</code> in <code>DEoptim.control(strategy = ..)</code>.</p>
+<hr>
+</section>
+<section id="deoptimrjdeoptim" class="level4">
+<h4 class="anchored" data-anchor-id="deoptimrjdeoptim">DEoptimR::<strong>JDEoptim</strong></h4>
+<div class="sourceCode" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="fu">JDEoptim</span>(lower, upper, fn,</span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>         <span class="at">constr =</span> <span class="cn">NULL</span>, <span class="at">meq =</span> <span class="dv">0</span>,</span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>         <span class="at">NP =</span> <span class="dv">10</span><span class="sc">*</span><span class="fu">length</span>(lower),</span>
+<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a>         <span class="at">maxiter =</span> <span class="dv">200</span><span class="sc">*</span><span class="fu">length</span>(lower), ...</span>
+<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p><a href="https://cran.r-universe.dev/DEoptimR/doc/manual.html#JDEoptim">help page</a></p>
+<p><code>JDEoptim</code> implements in pure R an Differential Evolution (DE) algorithm with “self-adapting control parameters”, as suggested by Brest et al.&nbsp;2006 (with Java code). It incorporates very general nonlinear (equality and inequality) constraints (though equality constraints seem to be problematic).</p>
+<p><em>Note</em>: It has many more control options than are shown on the usage line. The default values for population size <code>NP</code> and <code>maxiter</code> are too small.</p>
+<hr>
+</section>
+</section>
+<section id="simulated-annealing" class="level3">
+<h3 class="anchored" data-anchor-id="simulated-annealing">Simulated Annealing</h3>
+<p>Simulated Annealing is a stochastic search technique for global optimization. It is often used for functions with very many local minima. The algorithm is inspired by the annealing process in metallurgy.<br>
+– <a href="https://en.wikipedia.org/wiki/Simulated_annealing">wp:Simulated Annealing</a></p>
+<section id="gensagensa" class="level4">
+<h4 class="anchored" data-anchor-id="gensagensa">GenSA::<strong>GenSA</strong></h4>
+<div class="sourceCode" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="fu">GenSA</span>(<span class="at">par =</span> <span class="cn">NULL</span>, fn, lower, upper, <span class="at">control =</span> <span class="fu">list</span>(), ...)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p><a href="https://cran.r-universe.dev/GenSA/doc/manual.html#GenSA">help page</a></p>
+<p><code>GenSA</code> searches for global minimum of complicated non-linear objective functions with a large number of optima. It implements a generalized “Simulated Annealing” (SA) approach in C++, that is effective though not always as successful as Differential Evolution.</p>
+<hr>
+</section>
+</section>
+<section id="genetic-algorithms" class="level3">
+<h3 class="anchored" data-anchor-id="genetic-algorithms">Genetic Algorithms</h3>
+<hr>
+</section>
+<section id="particle-swarm-optimization" class="level3">
+<h3 class="anchored" data-anchor-id="particle-swarm-optimization">Particle-swarm Optimization</h3>
+<blockquote class="blockquote">
+<p>Particle-swarm Optimization (PSO) is a heuristic approach that optimizes a problem by iteratively trying to improve a set of particles (candidate solutions) with regard to a given measure of quality. The original idea was to simulate social interactions in a swarm of, e.g., fish or birds when looking for food. – <a href="https://en.wikipedia.org/wiki/Particle_swarm_optimization">wp:PSO</a></p>
+</blockquote>
+<section id="psopsoptim" class="level4">
+<h4 class="anchored" data-anchor-id="psopsoptim">pso::<strong>psoptim</strong></h4>
+<div class="sourceCode" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="fu">psoptim</span>(par, fn, <span class="at">gr =</span> <span class="cn">NULL</span>, ..., <span class="at">lower =</span> <span class="sc">-</span><span class="dv">1</span>, <span class="at">upper =</span> <span class="dv">1</span>,</span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>        <span class="at">control =</span> <span class="fu">list</span>()</span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p><a href="https://cran.r-universe.dev/pso/doc/manual.html#psoptim">help page</a></p>
+<p><code>psoptim</code> is a general implementation of particle swarm optimization usable as a direct replacement for optim. Control elements include the maximum number of iterations or the swarm size.</p>
+<p>Note: This implementation of “Particle Swarm Optimization” is <em>not</em> derivative-free!</p>
+<hr>
+</section>
+</section>
+<section id="cma-es" class="level3">
+<h3 class="anchored" data-anchor-id="cma-es">CMA-ES</h3>
+<blockquote class="blockquote">
+<p>Covariance matrix adaptation evolution strategy (CMA-ES) is a special of evolution strategy for numerical optimization of non-linear or non-convex continuous optimization problems. For more detailed information see – <a href="https://en.wikipedia.org/wiki/CMA-ES">wp:CMA-ES</a></p>
+</blockquote>
+<section id="rcmacmaoptimdp" class="level4">
+<h4 class="anchored" data-anchor-id="rcmacmaoptimdp">rCMA::<strong>cmaOptimDP</strong></h4>
+<div class="sourceCode" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cmaOptimDP</span>(cma, fitFunc, <span class="at">isFeasible =</span> <span class="cf">function</span>(x) {     <span class="cn">TRUE</span> },</span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">maxDimPrint =</span> <span class="dv">5</span>, <span class="at">iterPrint =</span> <span class="dv">10</span>, <span class="at">verbose =</span> <span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p><a href="https://cran.r-universe.dev/rCMA/doc/manual.html#cmaOptimDP">help page</a></p>
+<p><em>Note</em>: <code>cmaOptimDP</code> utilizes Java code by Hansen. The package is therefore depending on ‘rJava’ that on some systems may lead to installation problems.</p>
+<hr>
+</section>
+<section id="adagiopurecmaes" class="level4">
+<h4 class="anchored" data-anchor-id="adagiopurecmaes">adagio::<strong>pureCMAES</strong></h4>
+<div class="sourceCode" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="fu">pureCMAES</span>(par, fun, <span class="at">lower =</span> <span class="cn">NULL</span>, <span class="at">upper =</span> <span class="cn">NULL</span>, <span class="at">sigma =</span> <span class="fl">0.5</span>,</span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>          <span class="at">stopfitness =</span> <span class="sc">-</span><span class="cn">Inf</span>, <span class="at">stopeval =</span> <span class="dv">1000</span><span class="sc">*</span><span class="fu">length</span>(par)<span class="sc">^</span><span class="dv">2</span>, ...)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p><a href="https://cran.r-universe.dev/pracma/doc/manual.html#pureCMAES">help page</a></p>
+<p>The Octave/MATLAB function <code>pureCMAES</code> has been converted to R. This function will be used for higher-dimensional search spaces (up to 30-50 variables), though it can become very slow. The results are in general quite good.</p>
+<p><em>Note</em>: There are more implementations of CMA-ES, see the CRAN <a href="https://CRAN.R-project.org/view=Optimization">Optimization Task View</a>.</p>
+<hr>
+<hr>
+</section>
+</section>
+</section>
+<section id="linear-and-mixed-integer-programming" class="level2">
+<h2 class="anchored" data-anchor-id="linear-and-mixed-integer-programming">Linear and Mixed-integer Programming</h2>
+<section id="linear-programming" class="level3">
+<h3 class="anchored" data-anchor-id="linear-programming">Linear Programming</h3>
+<blockquote class="blockquote">
+<p>linear programming is a technique for the optimization of a linear objective function, subject to linear equality and inequality constraints. – <a href="https://en.wikipedia.org/wiki/Linear_programming">wp:Linear Programming</a></p>
+</blockquote>
+<section id="highshighs_solve" class="level4">
+<h4 class="anchored" data-anchor-id="highshighs_solve">highs::<strong>highs_solve</strong></h4>
+<div class="sourceCode" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="fu">highs_solve</span>(<span class="at">Q =</span> <span class="cn">NULL</span>, L, lower, upper,</span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>            A, lhs, rhs, types,</span>
+<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a>            <span class="at">maximum =</span> <span class="cn">FALSE</span>, <span class="at">offset =</span> <span class="dv">0</span>, <span class="at">control =</span> <span class="fu">highs_control</span>()</span>
+<span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p><a href="https://cran.r-universe.dev/highs/doc/manual.html#highs_solve">help page</a> and the <a href="https://highs.dev/">HiGHS</a> Web page.</p>
+<p>‘highs’ wraps the HiGHS solver, currently among the best open source mixed integer linear programming solver. Solves linear and quadratic problems of the form <span class="math inline">\(0.5 x'Qx + Lx\)</span> with linear and bounds constraints: <span class="math inline">\(\text{lhs} \le Ax \le \text{rhs}\)</span>, <span class="math inline">\(\text{lower} \le x \le \text{upper}\)</span>, and different types of variables (1 or ‘C’ continuous, 2 or ‘I’ integer, 3 or ‘SC’ semi-continuous, etc.).</p>
+<p><em>Note</em>: Quadratic problems do not allow for integer variables.</p>
+<hr>
+</section>
+<section id="rcbccbc_solve" class="level4">
+<h4 class="anchored" data-anchor-id="rcbccbc_solve">rcbc::<strong>cbc_solve</strong></h4>
+<div class="sourceCode" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cbc_solve</span>(obj, mat,</span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">row_ub =</span> <span class="fu">rep.int</span>(<span class="cn">Inf</span>, <span class="fu">nrow</span>(mat)),       <span class="co"># nrow(mat) no. of constraints</span></span>
+<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">row_lb =</span> <span class="fu">rep.int</span>(<span class="sc">-</span><span class="cn">Inf</span>, <span class="fu">nrow</span>(mat)),</span>
+<span id="cb24-4"><a href="#cb24-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">col_lb =</span> <span class="fu">rep.int</span>(<span class="sc">-</span><span class="cn">Inf</span>, <span class="fu">ncol</span>(mat)),      <span class="co"># ncol(mat) no. of variables</span></span>
+<span id="cb24-5"><a href="#cb24-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">col_ub =</span> <span class="fu">rep.int</span>(<span class="cn">Inf</span>, <span class="fu">ncol</span>(mat)),</span>
+<span id="cb24-6"><a href="#cb24-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">is_integer =</span> <span class="fu">rep.int</span>(<span class="cn">FALSE</span>, <span class="fu">ncol</span>(mat)), <span class="co"># type of variables</span></span>
+<span id="cb24-7"><a href="#cb24-7" aria-hidden="true" tabindex="-1"></a>  <span class="at">max =</span> <span class="cn">FALSE</span>,</span>
+<span id="cb24-8"><a href="#cb24-8" aria-hidden="true" tabindex="-1"></a>  <span class="at">cbc_args =</span> <span class="fu">list</span>(),</span>
+<span id="cb24-9"><a href="#cb24-9" aria-hidden="true" tabindex="-1"></a>  <span class="at">initial_solution =</span> <span class="cn">NULL</span></span>
+<span id="cb24-10"><a href="#cb24-10" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p><a href="https://rdrr.io/github/yuehmeir2/myFormAssembler/man/cbc.html">help page</a></p>
+<p>CLP and CBC are open-source <a href="https://www.coin-or.org/">COIN-OR</a> projects. CLP solves linear programs and CBC adds handling of integer variables. ‘rcbc’ provides an interface for mixed-integer linear programs (without integer variables CLP will be called).</p>
+<p><em>Remark</em>: ‘rcbc’ has to be installed from <code>https://dirkschumacher.github.io/rcbc/</code>.</p>
+<hr>
+<hr>
+</section>
+</section>
+</section>
+<section id="multivariate-root-finding" class="level2">
+<h2 class="anchored" data-anchor-id="multivariate-root-finding">Multivariate Root Finding</h2>
+<blockquote class="blockquote">
+<p>Finding roots of multivariate function could in principle be done by minimizing the square of the function values. But there are more specialized procedures to perform this task, inspired by Gauss-Newton or spectral approaches.</p>
+</blockquote>
+<section id="nleqslvnleqslv" class="level4">
+<h4 class="anchored" data-anchor-id="nleqslvnleqslv">nleqslv::<strong>nleqslv</strong></h4>
+<div class="sourceCode" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="fu">nleqslv</span>(x, fn, <span class="at">jac=</span><span class="cn">NULL</span>, ...,</span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>    <span class="at">method =</span> <span class="fu">c</span>(<span class="st">"Broyden"</span>, <span class="st">"Newton"</span>),</span>
+<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">global =</span> <span class="fu">c</span>(<span class="st">"dbldog"</span>, <span class="st">"pwldog"</span>, <span class="st">"cline"</span>, <span class="st">"qline"</span>, <span class="st">"gline"</span>, <span class="st">"hook"</span>, none<span class="st">"),</span></span>
+<span id="cb25-4"><a href="#cb25-4" aria-hidden="true" tabindex="-1"></a><span class="st">    xscalm = c("</span>fixed<span class="st">","</span>auto<span class="st">"),</span></span>
+<span id="cb25-5"><a href="#cb25-5" aria-hidden="true" tabindex="-1"></a><span class="st">    jacobian=FALSE, control = list()</span></span>
+<span id="cb25-6"><a href="#cb25-6" aria-hidden="true" tabindex="-1"></a><span class="st">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p><a href="https://cran.r-universe.dev/nleqslv/doc/manual.html#nleqslv">help page</a></p>
+<p>Solves a system of nonlinear equations using a Broyden or a Newton method with a choice of global strategies such as line search and trust region. <code>fn</code> must be a function <span class="math inline">\(f: \mathbb{R}^n \to \mathbb{R}^n\)</span>.</p>
+<hr>
+</section>
+<section id="bbsane" class="level4">
+<h4 class="anchored" data-anchor-id="bbsane">BB::<strong>sane</strong></h4>
+<div class="sourceCode" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sane</span>(par, fn, <span class="at">method=</span><span class="dv">2</span>, <span class="at">control=</span><span class="fu">list</span>(),</span>
+<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a>       <span class="at">quiet=</span><span class="cn">FALSE</span>, <span class="at">alertConvergence=</span><span class="cn">TRUE</span>, ...</span>
+<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb26-4"><a href="#cb26-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-5"><a href="#cb26-5" aria-hidden="true" tabindex="-1"></a><span class="fu">dfsane</span>(par, fn, <span class="at">method=</span><span class="dv">2</span>, <span class="at">control=</span><span class="fu">list</span>(),</span>
+<span id="cb26-6"><a href="#cb26-6" aria-hidden="true" tabindex="-1"></a>       <span class="at">quiet=</span><span class="cn">FALSE</span>, <span class="at">alertConvergence=</span><span class="cn">TRUE</span>, ...</span>
+<span id="cb26-7"><a href="#cb26-7" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p><code>sane</code> <a href="https://cran.r-universe.dev/BB/doc/manual.html#sane">help page</a> and <code>dfsane</code> <a href="https://cran.r-universe.dev/BB/doc/manual.html#dfsane">help page</a></p>
+<p><code>sane</code> provides a non-monotone spectral approach for solving large-scale nonlinear systems of equations, and <code>dfsane</code> provides a derivative-free version of this spectral approach. The function value must have the same length as the input vector.</p>
+<hr>
+<hr>
+</section>
+</section>
+<section id="appendix-i-r-solvers" class="level2">
+<h2 class="anchored" data-anchor-id="appendix-i-r-solvers">Appendix I: R Solvers</h2>
+<section id="base-r-solvers" class="level3">
+<h3 class="anchored" data-anchor-id="base-r-solvers">Base R Solvers</h3>
+<blockquote class="blockquote">
+<p>R provides <code>optimize</code> (univariate optimization) and <code>optim</code> or <code>nlminb</code> (multivariate optimization) for function minimization. Besides that, there is <code>nlm</code> which in general is not recommended.</p>
+</blockquote>
+<section id="optimize" class="level4">
+<h4 class="anchored" data-anchor-id="optimize"><strong>optimize</strong></h4>
+<div class="sourceCode" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="fu">optimize</span>(f, interval, ..., <span class="at">lower =</span> <span class="fu">min</span>(interval), <span class="at">upper =</span> <span class="fu">max</span>(interval),</span>
+<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a>         <span class="at">maximum =</span> <span class="cn">FALSE</span>, <span class="at">tol =</span> .Machine<span class="sc">$</span>double.eps<span class="sc">^</span><span class="fl">0.25</span></span>
+<span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p><a href="./man/optimize.html">help page</a></p>
+<p>Univariate (i.e., onedimensional) optimization aims to find the optimum of a continuous, real-valued function in an interval of the real numbers (with respect to its first argument). <code>optimize</code> uses a combination of golden section search and successive parabolic interpolation.</p>
+<p><em>Note</em>: When there is more than one local minimum, it is uncertain which one will be chosen.</p>
+<hr>
+</section>
+<section id="optim" class="level4">
+<h4 class="anchored" data-anchor-id="optim"><strong>optim</strong></h4>
+<div class="sourceCode" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="fu">optim</span>(par, fn, <span class="at">gr =</span> <span class="cn">NULL</span>, ..., <span class="at">method =</span> <span class="fu">c</span>(<span class="st">"Nelder-Mead"</span>),</span>
+<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a>      <span class="at">lower =</span> <span class="sc">-</span><span class="cn">Inf</span>, <span class="at">upper =</span> <span class="cn">Inf</span>,</span>
+<span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a>      <span class="at">control =</span> <span class="fu">list</span>(), <span class="at">hessian =</span> <span class="cn">FALSE</span></span>
+<span id="cb28-4"><a href="#cb28-4" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p><a href="./man/optim.html">help page</a></p>
+<p>General-purpose multivariate optimization; different methods, Nelder-Mead, BFGS, and SANN are provided.,The gradient function if needed, can be user-supplied or will be calculated with finite differences. It includes options for handling box constraints.</p>
+<p>The <code>optim</code> function supports the following methods:</p>
+<ul>
+<li><code>optim(method="Nelder-Mead")</code> – Nelder-Mead, <em>derivative-free</em> and robust, but relatively slow.</li>
+<li><code>optim(method="BFGS")</code> – ‘BFGS’ implementation, a quasi-Newton method.</li>
+<li><code>optim(method="L-BFGS-B")</code> – ‘BFGS’ method, allows for box constraints</li>
+<li><code>optim(method="CG")</code> conjugate gradients method, <em>not</em> recommended.</li>
+<li><code>optim(method="SANN")</code> variant SA method, <em>not</em> recommended.</li>
+<li><code>optim(method="Brent")</code> – univariate optimization, calls <code>optimize</code>, see above.</li>
+</ul>
+<p>See the <a href="OptimCheatsheet.pdf">optim Cheat Sheet</a> for more information about <code>optim</code> and the other optimization solvers in Base R, <code>nlm</code> and <code>nlminb</code>.</p>
+<p><em>Note</em>: Default is the derivative-free Nelder-Mead algorithm. If the objective function has derivatives, applying a ‘BFGS’ variant is definitely to be preferred.</p>
+<hr>
+</section>
+<section id="nlminb" class="level4">
+<h4 class="anchored" data-anchor-id="nlminb"><strong>nlminb</strong></h4>
+<div class="sourceCode" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="fu">nlminb</span>(start, objective, <span class="at">gradient =</span> <span class="cn">NULL</span>, <span class="at">hessian =</span> <span class="cn">NULL</span>, ...,</span>
+<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a>       <span class="at">scale =</span> <span class="dv">1</span>, <span class="at">control =</span> <span class="fu">list</span>(), <span class="at">lower =</span> <span class="sc">-</span><span class="cn">Inf</span>, <span class="at">upper =</span> <span class="cn">Inf</span></span>
+<span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p><a href="./man/nlminb.html">help page</a></p>
+<p>Uses the <a href="https://netlib.org/port/">PORT</a> library, a Fortran implementation of quasi-Newton BFGS, for unconstrained and box-constrained optimization.</p>
+<p><em>Note</em>: In general, <code>optim</code> is to be preferred, or use <code>ucminf</code>, see above.</p>
+<hr>
+</section>
+<section id="constroptim" class="level4">
+<h4 class="anchored" data-anchor-id="constroptim"><strong>constrOptim</strong></h4>
+<div class="sourceCode" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="fu">constrOptim</span>(theta, f, grad, ui, ci, <span class="at">mu =</span> <span class="fl">1e-04</span>, <span class="at">control =</span> <span class="fu">list</span>(),</span>
+<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a>            <span class="at">method =</span> <span class="cf">if</span>(<span class="fu">is.null</span>(grad)) <span class="st">"Nelder-Mead"</span> <span class="cf">else</span> <span class="st">"BFGS"</span>,</span>
+<span id="cb30-3"><a href="#cb30-3" aria-hidden="true" tabindex="-1"></a>            <span class="at">outer.iterations =</span> <span class="dv">100</span>, <span class="at">outer.eps =</span> <span class="fl">1e-05</span>, ...,</span>
+<span id="cb30-4"><a href="#cb30-4" aria-hidden="true" tabindex="-1"></a>            <span class="at">hessian =</span> <span class="cn">FALSE</span></span>
+<span id="cb30-5"><a href="#cb30-5" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p><a href="./man/constrOptim.html">help page</a></p>
+<p>Minimise a function subject to linear inequality constraints using an adaptive barrier algorithm. The feasible region is defined by <code>ui %*% theta - ci &gt;= 0</code>. The starting value must be in the interior of the feasible region, but the minimum may be on the boundary.</p>
+<hr>
+</section>
+<section id="nls" class="level4">
+<h4 class="anchored" data-anchor-id="nls"><strong>nls</strong></h4>
+<div class="sourceCode" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="fu">nls</span>(formula, data, start, control, algorithm,</span>
+<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a>    trace, subset, weights, na.action, model,</span>
+<span id="cb31-3"><a href="#cb31-3" aria-hidden="true" tabindex="-1"></a>    lower, upper, ...</span>
+<span id="cb31-4"><a href="#cb31-4" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p><a href="./man/nls.html">help page</a></p>
+<p><code>nls</code> determines the nonlinear (weighted) least-squares estimates of the parameters of a nonlinear model. Lower and upper bounds can only be used with the <code>port</code> algorithm. The default is Gauss-Newton, another possibility is <code>plinear</code> for partially linear least-squares models).</p>
+<p><em>Note</em>: <code>nls</code> has problems with ‘singular gradients’; instead, use one of the two alternatives, <code>nlsr</code> or <code>minpack.lm</code>, listed above.</p>
+<hr>
+<hr>
+</section>
+</section>
+</section>
+<section id="appendix-ii-external-solvers" class="level2">
+<h2 class="anchored" data-anchor-id="appendix-ii-external-solvers">Appendix II: External Solvers</h2>
+<section id="ipopt-through-juliacall" class="level3">
+<h3 class="anchored" data-anchor-id="ipopt-through-juliacall">Ipopt through JuliaCall</h3>
+</section>
+<section id="the-roi-infrastructure" class="level3">
+<h3 class="anchored" data-anchor-id="the-roi-infrastructure">The ROI Infrastructure</h3>
+</section>
+<section id="utilizing-the-neos-server" class="level3">
+<h3 class="anchored" data-anchor-id="utilizing-the-neos-server">Utilizing the NEOS Server</h3>
+<hr>
+<hr>
+</section>
+</section>
+<section id="references" class="level2">
+<h2 class="anchored" data-anchor-id="references">References</h2>
+<p>Boyd, S., and L. Vandenberghe. Convex Optimization. Cambridge University Press, 2004.<br>
+URL: https://web.stanford.edu/~boyd/cvxbook/</p>
+<p>Nocedal, J., and S.J. Wright. Numerical Optimization. Springer Verlag, New York 1999.</p>
+<p>Price, K.V., R.M. Storn and J.A. Lampinen. Differential Evolution – A Practical Approach to Global Optimization. Springer Verlag, Berlin Heidelberg 2005.</p>
+<p>Schwendinger, F., and H.W. Borchers (2023). CRAN Task View: Optimization and Mathematical Programming. Version 2023-08-19. URL: https://CRAN.R-project.org/view=Optimization.</p>
+<p>Vanderbei. Linear Programming: Foundations and Examples. 5th Edition, Springer Verlag, New York 2020.</p>
+<p>Computational Optimization Open Textbook. Cornell University, New York 2020.<br>
+URL: https://optimization.cbe.cornell.edu/index.php?title=Main_Page</p>
+</section>
+
+</main>
+<!-- /main column -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    text: function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+</body></html>
