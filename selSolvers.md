@@ -548,7 +548,7 @@ optimize(f, interval, ..., lower = min(interval), upper = max(interval),
          maximum = FALSE, tol = .Machine$double.eps^0.25
 )
 ```
-[help page](./man/optimize.html)
+[help page](https://rdrr.io/r/stats/optimize.html)
 
 Univariate (i.e., onedimensional) optimization aims to find the optimum of a continuous, real-valued function in an interval of the real numbers (with respect to its first argument). `optimize` uses a combination of golden section search and successive parabolic interpolation.
 
@@ -564,7 +564,7 @@ optim(par, fn, gr = NULL, ..., method = c("Nelder-Mead"),
       control = list(), hessian = FALSE
 )
 ```
-[help page](./man/optim.html)
+[help page](https://rdrr.io/r/stats/optim.html)
 
 General-purpose multivariate optimization; different methods, Nelder-Mead, BFGS, and SANN are provided.,The gradient function if needed, can be user-supplied or will be calculated with finite differences. It includes options for handling box constraints.
 
@@ -592,7 +592,7 @@ nlminb(start, objective, gradient = NULL, hessian = NULL, ...,
        scale = 1, control = list(), lower = -Inf, upper = Inf
 )
 ```
-[help page](./man/nlminb.html)
+[help page](https://rdrr.io/r/stats/nlminb.html)
 
 Uses the [PORT](https://netlib.org/port/) library, a Fortran implementation of quasi-Newton BFGS, for unconstrained and box-constrained optimization.
 
@@ -609,7 +609,7 @@ constrOptim(theta, f, grad, ui, ci, mu = 1e-04, control = list(),
             hessian = FALSE
 )
 ```
-[help page](./man/constrOptim.html)
+[help page](https://rdrr.io/r/stats/constrOptim.html)
 
 Minimise a function subject to linear inequality constraints using an adaptive barrier algorithm. The feasible region is defined by `ui %*% theta - ci >= 0`. The starting value must be in the interior of the feasible region, but the minimum may be on the boundary.
 
@@ -623,7 +623,7 @@ nls(formula, data, start, control, algorithm,
     lower, upper, ...
 )
 ```
-[help page](./man/nls.html)
+[help page](https://rdrr.io/r/stats/nls.html)
 
 `nls` determines the nonlinear (weighted) least-squares estimates of the parameters of a nonlinear model. Lower and upper bounds can only be used with the `port` algorithm. The default is Gauss-Newton, another possibility is `plinear` for partially linear least-squares models).
 
