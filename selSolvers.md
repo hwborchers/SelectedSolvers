@@ -1,14 +1,22 @@
----
-title: "Selected Optimization Packages"
-author: "Hans W Borchers"
-date: "September 30, 2023"
-toc: true
-toc-depth: 4
-keep-md: true
-theme: sandstone
-format: html
----
+# Selected Optimization Packages
 
+Author: Hans W Borchers  
+Date: September 30, 2023
+
+**Contents**
+
+* [Unconstrained optimization](#unconstrained-optimization)
+* [Constrained Optimization](#constrained-optimization)
+* [Quadratic Optimization](#quadratic-optimization)
+* [Least-squares Problems](#least-squares-problems)
+* [Convex Optimization](#convex-optimization)
+* [Derivative-free Optimization](#derivative-free-optimization)
+* [Global Optimization](#global-and-stochastic-optimization)
+* [Linear and Mixed-integer Programming](#linear-and-mixed-integer-programming)
+* [Multivariate Root Finding](#multivariate-root-finding)
+* [Appendix I: Base R Solvers](#appendix-i-r-solvers)
+* Appendix II: External Solvers
+* [References](#references)
 
 
 ## Continuous Optimization
