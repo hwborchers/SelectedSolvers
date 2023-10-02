@@ -3,6 +3,10 @@
 Author: Hans W Borchers  
 Date: September 30, 2023
 
+## Continuous Optimization
+
+*All optimization solvers in Base R have been moved to Appendix I. This page will focus on more modern and state-of-the-art solvers available in packages on CRAN or Github.*
+
 **Contents**
 
 * [Unconstrained optimization](#unconstrained-optimization)
@@ -17,11 +21,6 @@ Date: September 30, 2023
 * [Appendix I: Base R Solvers](#appendix-i-r-solvers)
 * Appendix II: External Solvers
 * [References](#references)
-
-
-## Continuous Optimization
-
-*All optimization solvers in Base R have been moved to Appendix I. This page will focus on more modern and state-of-the-art solvers available in packages on CRAN or Github.*
 
 ----
 
